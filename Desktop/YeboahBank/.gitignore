@@ -1,0 +1,17 @@
+# macOS files
+.DS_Store
+.Trash
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node / Expo
+node_modules/
+.expo/
+*.log
+
+# VSCode
+.vscode/
