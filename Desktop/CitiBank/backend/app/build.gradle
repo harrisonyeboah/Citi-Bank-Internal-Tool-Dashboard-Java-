@@ -1,0 +1,48 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation libs.guava
+    implementation 'org.json:json:20230227'  
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+application {
+    mainClass = 'org.example.App'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+javafx {
+    version = "17.0.8"
+    modules = ['javafx.controls']
+}
+
+
+// --- Fix for configuration cache ---
+
+// Get the API key during configuration phase (not execution)
+def finnhubApiKey = project.findProperty("FINNHUB_API_KEY")
+
+tasks.named('run', JavaExec) {
+    if (finnhubApiKey != null) {
+        environment "FINNHUB_API_KEY", finnhubApiKey
+    }
+    standardInput = System.in
+}
